@@ -3,10 +3,10 @@ from ftplib import FTP, error_perm
 def get_ftp_connection():
     try:
         config = {
-            'host': "",
+            'host': "127.0.0.1",
             'port': 21,
-            'user': "",
-            'passwd': ""
+            'user': "admin_paris",
+            'passwd': "paris"
         }
 
         ftp = FTP()

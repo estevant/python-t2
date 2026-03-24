@@ -4,17 +4,8 @@ from upload_ftp import upload_fichier
 from download_ftp import download_fichier
 from sauvegarde_ftp import sauvegarde_incrementale, sauvegarde_versionnee
 from chiffrement_fichier import generer_cle, chiffrer_fichier, dechiffrer_fichier
-from authentification import login_system
 
 def affichage_menu():
-    role_connecte = login_system()
-    if role_connecte is None:
-        print("Programme arrete")
-        return
-    elif role_connecte == "user":
-        print("Acces refuse")
-        return
-
     while True:
         print("""
     ===== GESTION DES FICHIERS =====
