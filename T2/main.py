@@ -1,0 +1,3 @@
+from menu_principal import affichage_menu_principal
+
+affichage_menu_principal()
