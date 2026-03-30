@@ -1,5 +1,8 @@
 import smtplib
 from email.message import EmailMessage
+from dotenv import load_dotenv
+import os
+
 
 
 def envoie_mail(mail_user,login,mdp):
@@ -8,7 +11,7 @@ def envoie_mail(mail_user,login,mdp):
     email = EmailMessage()
 
 #les en-têtes de l'email
-    email['From'] = ''
+    email['From'] = 'mysqlpython3@gmail.com'
     email['To'] = mail_user
     email['Subject'] = 'C est un test pour envoyer les login et mdp'
 
@@ -17,8 +20,13 @@ def envoie_mail(mail_user,login,mdp):
 # Informations du serveur SMTP
     smtp_server = 'smtp.gmail.com'
     port = 587  # Port recommandé pour le chiffrement TLS
-    username = ''
-    password = ''
+
+    load_dotenv()  # charge le .env
+
+    username=os.getenv("mon_mail")
+    password=os.getenv("mdp")
+
+
 
 # # Connexion au serveur
     try:

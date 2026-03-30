@@ -29,3 +29,5 @@ def show_user():
 
         # connexion.cmd_change_user(nom='', prenom='', mail='')
 # show_user()
+
+#ajouter la visualisation des admin par ville , améliorer la mise en page (tableau ?)

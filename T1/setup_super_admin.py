@@ -1,5 +1,5 @@
 import bcrypt
-from T1.connexion_bdd import get_connection
+from connexion_bdd import get_connection
 
 
 def create_superadmin():
@@ -13,8 +13,8 @@ def create_superadmin():
     hash_final = bcrypt.hashpw(pwd_bytes, bcrypt.gensalt()).decode('utf-8')
 
     try:
-        sql = "INSERT INTO users (nom, prenom, mail, login, password, role) VALUES (%s, %s, %s, %s, %s, %s)"
-        valeurs = ('Superadmin', 'Superadmin', 'admin.paris@hopital.com', 'sadmin', hash_final, 'superadmin')
+        sql = "INSERT INTO users (nom, prenom, mail, login, password, role, ville) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        valeurs = ('Superadmin', 'Superadmin', 'admin.paris@hopital.com', 'sadmin', hash_final, 'superadmin', "Paris")
 
         cursor.execute(sql, valeurs)
         connexion.commit()

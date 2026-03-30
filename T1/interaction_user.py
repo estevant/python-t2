@@ -1,7 +1,7 @@
 import re
 import random
 import string
-from T1.connexion_bdd import get_connection
+from connexion_bdd import get_connection
 import bcrypt
 from send_email import envoie_mail
 
@@ -17,6 +17,7 @@ def add_user(current_user_role):
     nom = str(input("saisir le nom : ")).strip()
     prenom = str(input("saisir le prenom : ")).strip()
     mail = str(input("saisir le mail : ")).strip()
+    ville = str(input("saisir le ville : ")).strip()
 
     print("Quel est le rôle de ce nouvel utilisateur ?")
     print("1. Utilisateur standard (Médecin, infirmier...)")
@@ -40,7 +41,7 @@ def add_user(current_user_role):
     resultat = regex.search(mail)
 
     if resultat:
-        if not nom or not prenom:
+        if not nom or not prenom or not ville:
             print("des info sont vides")
         else:
             base_login = (prenom[0] + nom).lower()
@@ -66,8 +67,8 @@ def add_user(current_user_role):
 
             try:
                 cursor.execute(
-                    "INSERT INTO users (nom, prenom, mail, login, password, role) VALUES (%s, %s, %s, %s, %s, %s)",
-                    (nom, prenom, mail, login_genere, password_hash_bdd, role_a_attribuer)
+                    "INSERT INTO users (nom, prenom, mail, login, password, role, ville) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                    (nom, prenom, mail, login_genere, password_hash_bdd, role_a_attribuer, ville)
                 )
                 connexion.commit()
                 print(f"L'utilisateur (Rôle: {role_a_attribuer}) a été rajouté")
@@ -80,6 +81,7 @@ def add_user(current_user_role):
                 cursor.close()
                 connexion.close()
     else:
-        print("veillez saisir une addrese mail correct")
+        print("veuillez saisir une adresse mail correct")
 
 # add_user()
+#Vérifier si l’admin est déjà créé dans la ville, ajouter une limitation de 1 admin par ville

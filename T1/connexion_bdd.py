@@ -1,18 +1,21 @@
 import mysql.connector
 from mysql.connector import errorcode
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 def get_connection():
     try:
         config = {
-            'host': "192.168.1.175",
-            'port':3306,
-            'user': "",
-            'password': "",
-            'database': "hopital"
+            'host': os.getenv("DB_HOST"),
+            'port': os.getenv("DB_PORT"),
+            'user': os.getenv("DB_USER"),
+            'password': os.getenv("DB_PASSWORD"),
+            'database': os.getenv("DB_DATABASE")
         }
         
         connexion = mysql.connector.connect(**config)
-        print("on est connecteeeee")  
         return connexion
 
     except mysql.connector.Error as err:
