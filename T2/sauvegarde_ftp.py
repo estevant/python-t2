@@ -1,6 +1,6 @@
 import os
 import datetime
-from connexion_ftp import get_ftp_connection
+from ftp_connexion import get_ftp_connection
 
 def lister_fichiers_ftp(ftp):
     fichiers = []

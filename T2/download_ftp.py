@@ -1,5 +1,5 @@
 import os
-from connexion_ftp import get_ftp_connection
+from ftp_connexion import get_ftp_connection
 
 def download_fichier():
     ftp = get_ftp_connection()

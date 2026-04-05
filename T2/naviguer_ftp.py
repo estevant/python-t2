@@ -1,4 +1,4 @@
-from connexion_ftp import get_ftp_connection
+from ftp_connexion import get_ftp_connection
 
 def naviguer_ftp():
     ftp = get_ftp_connection()
