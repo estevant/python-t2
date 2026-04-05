@@ -24,7 +24,8 @@ def upload_fichier():
                 return
 
         with open(chemin_fichier, 'rb') as fichier:
-            ftp.storbinary(f'STOR {nom_fichier}', fichier)
+            ftp.storbinary(f'STOR {nom_fichier}', fichier) # Envoie le fichier en mode binaire sur le FTP
+
 
         print(f"le fichier '{nom_fichier}' a ete envoye avec succes")
 

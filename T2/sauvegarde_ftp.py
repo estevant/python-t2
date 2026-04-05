@@ -2,13 +2,13 @@ import os
 import datetime
 from connexion_ftp import get_ftp_connection
 
-def _lister_fichiers_ftp(ftp):
+def lister_fichiers_ftp(ftp):
     fichiers = []
     ftp.retrlines('NLST', fichiers.append)
     return fichiers
 
-def _obtenir_version_suivante(ftp, nom_base):
-    fichiers_distants = _lister_fichiers_ftp(ftp)
+def obtenir_version_suivante(ftp, nom_base):
+    fichiers_distants = lister_fichiers_ftp(ftp)
     nom_sans_ext = os.path.splitext(nom_base)[0]
     ext = os.path.splitext(nom_base)[1]
 
@@ -25,7 +25,7 @@ def sauvegarde_incrementale():
         return
 
     try:
-        dossier_local = input("saisir le chemin du dossier local a sauvegarder : ").strip()
+        dossier_local = input("saisir le chemin du dossier local a sauvegarder : ").strip()# Demande le dossier à sauvegarder
 
         if not os.path.isdir(dossier_local):
             print("Erreur: le dossier n'existe pas")
@@ -56,7 +56,8 @@ def sauvegarde_incrementale():
                 print(f"Erreur: impossible de creer le repertoire du site : {e}")
                 return
 
-        horodatage = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        horodatage = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")# Génère un nom de dossier de sauvegarde avec date
+
         nom_sauvegarde = f"sauvegarde_{horodatage}"
 
         try:
@@ -66,7 +67,7 @@ def sauvegarde_incrementale():
             print(f"Erreur lors de la creation du dossier de sauvegarde : {e}")
             return
 
-        fichiers_distants = _lister_fichiers_ftp(ftp)
+        fichiers_distants = lister_fichiers_ftp(ftp)
         compteur = 0
 
         for nom_fichier in os.listdir(dossier_local):
@@ -76,11 +77,13 @@ def sauvegarde_incrementale():
                 continue
 
             if nom_fichier in fichiers_distants:
-                nom_versionne = _obtenir_version_suivante(ftp, nom_fichier)
+                nom_versionne = obtenir_version_suivante(ftp,
+                                                         nom_fichier)  # Signale si une ancienne version existe déjà
                 print(f"  archivage de l'ancienne version -> {nom_versionne}")
 
             with open(chemin_complet, 'rb') as fichier:
-                ftp.storbinary(f'STOR {nom_fichier}', fichier)
+                ftp.storbinary(f'STOR {nom_fichier}', fichier)# Envoie le fichier sur le FTP
+
                 compteur += 1
                 print(f"  envoye : {nom_fichier}")
 
@@ -114,10 +117,10 @@ def sauvegarde_versionnee():
                 return
 
         nom_fichier = os.path.basename(chemin_fichier)
-        nom_versionne = _obtenir_version_suivante(ftp, nom_fichier)
+        nom_versionne = obtenir_version_suivante(ftp, nom_fichier)
 
         with open(chemin_fichier, 'rb') as fichier:
-            ftp.storbinary(f'STOR {nom_versionne}', fichier)
+            ftp.storbinary(f'STOR {nom_versionne}', fichier)# Envoie le fichier
 
         print(f"le fichier a ete sauvegarde sous le nom '{nom_versionne}'")
 

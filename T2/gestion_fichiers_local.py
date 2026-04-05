@@ -15,29 +15,21 @@ def gestion_fichiers_local():
         choix = input("Selectionnez une option : ").strip()
 
         match choix:
-
             case '1':
                 naviguer_arborescence()
-
             case '2':
                 creer_fichier_repertoire()
-
             case '3':
                 modifier_fichier()
-
             case '4':
                 copier_fichier_repertoire()
-
             case '5':
                 deplacer_fichier_repertoire()
-
             case '6':
                 supprimer_fichier_repertoire()
-
             case '0':
                 print("retour au menu")
                 return
-
             case _:
                 print("---->je ne comprend pas la demande")
 
@@ -45,7 +37,7 @@ def gestion_fichiers_local():
 def naviguer_arborescence():
     chemin = input("saisir le chemin du repertoire a explorer (. pour le courant) : ").strip()
     if not chemin:
-        chemin = "."
+        chemin = "."  # dossier courant par défaut
 
     if not os.path.isdir(chemin):
         print("Erreur: ce repertoire n'existe pas")
@@ -55,10 +47,10 @@ def naviguer_arborescence():
     for element in os.listdir(chemin):
         chemin_complet = os.path.join(chemin, element)
         if os.path.isdir(chemin_complet):
-            print(f"  [REP] {element}")
+            print(f"  [REP] {element}")  # affiche les répertoires
         else:
             taille = os.path.getsize(chemin_complet)
-            print(f"  [FIC] {element} ({taille} octets)")
+            print(f"  [FIC] {element} ({taille} octets)")  # affiche les fichiers + taille
 
 
 def creer_fichier_repertoire():
@@ -69,7 +61,8 @@ def creer_fichier_repertoire():
     if choix == "1":
         chemin = input("saisir le chemin du repertoire a creer : ").strip()
         try:
-            os.makedirs(chemin, exist_ok=True)
+            os.makedirs(chemin, exist_ok=True)# crée le répertoire (+ parents)
+
             print(f"le repertoire '{chemin}' a ete cree")
         except Exception as e:
             print(f"Erreur : {e}")
@@ -106,13 +99,13 @@ def modifier_fichier():
         if choix == "1":
             nouveau_contenu = input("saisir le nouveau contenu : ")
             with open(chemin, 'w') as fichier:
-                fichier.write(nouveau_contenu)
+                fichier.write(nouveau_contenu)# Écrase le fichier avec le nouveau contenu
             print("le fichier a ete modifie")
 
         elif choix == "2":
             ajout = input("saisir le contenu a ajouter : ")
             with open(chemin, 'a') as fichier:
-                fichier.write("\n" + ajout)
+                fichier.write("\n" + ajout)# Ajoute le contenu à la fin
             print("le contenu a ete ajoute")
         else:
             print("on ne comprend pas la demande")
@@ -127,10 +120,10 @@ def copier_fichier_repertoire():
 
     try:
         if os.path.isdir(source):
-            shutil.copytree(source, destination)
+            shutil.copytree(source, destination)# Copie récursive d'un répertoire
             print(f"le repertoire '{source}' a ete copie vers '{destination}'")
         elif os.path.isfile(source):
-            shutil.copy2(source, destination)
+            shutil.copy2(source, destination)# Copie d'un fichier en conservant les métadonnées
             print(f"le fichier '{source}' a ete copie vers '{destination}'")
         else:
             print("Erreur: le chemin source n'existe pas")
@@ -147,7 +140,7 @@ def deplacer_fichier_repertoire():
         return
 
     try:
-        shutil.move(source, destination)
+        shutil.move(source, destination)# déplace le fichier ou répertoire -> destination
         print(f"'{source}' a ete deplace vers '{destination}'")
     except Exception as e:
         print(f"Erreur : {e}")
@@ -167,10 +160,10 @@ def supprimer_fichier_repertoire():
 
     try:
         if os.path.isdir(chemin):
-            shutil.rmtree(chemin)
+            shutil.rmtree(chemin)# Supprime le répertoire et son contenu
             print(f"le repertoire '{chemin}' et son contenu ont ete supprimes")
         else:
-            os.remove(chemin)
+            os.remove(chemin)# Supprime
             print(f"le fichier '{chemin}' a ete supprime")
     except Exception as e:
         print(f"Erreur : {e}")

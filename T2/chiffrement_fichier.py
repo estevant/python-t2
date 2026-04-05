@@ -24,7 +24,7 @@ def chiffrer_fichier():
         print("Erreur: le fichier de cle n'existe pas. Generez d'abord une cle.")
         return
 
-    # Charger la cle d'abord
+    # charger la cle
     with open(chemin_cle, "rb") as key_file:
         key = key_file.read()
 
@@ -40,13 +40,11 @@ def chiffrer_fichier():
     with open(chemin_fichier, "rb") as file:
         data = file.read()
 
-    # Chiffrer le contenu lu
-    encrypted_data = f.encrypt(data)
+    encrypted_data = f.encrypt(data)     # chiffrer le contenu
 
-    # Sauvegarder le fichier chiffre
     chemin_chiffre = chemin_fichier + ".enc"
     with open(chemin_chiffre, "wb") as file:
-        file.write(encrypted_data)
+        file.write(encrypted_data)     # sauvegarder le fichier chiffre
 
     print(f"le fichier a ete chiffre et sauvegarde dans '{chemin_chiffre}'")
 
