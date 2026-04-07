@@ -50,7 +50,7 @@ def menu_gestion_users(role_connecte):
             case _:
                 print("---->je ne comprend pas la demande")
 
-def menu_gestion_fichiers():
+def menu_gestion_fichiers(role_connecte):
     while True:
         print("""
     ===== GESTION DES FICHIERS =====
@@ -58,8 +58,8 @@ def menu_gestion_fichiers():
          2. Naviguer sur le serveur FTP
          3. Envoyer un fichier sur le FTP (upload)
          4. Telecharger un fichier depuis le FTP (download)
-         5. Sauvegarde incrementale vers le FTP
-         6. Sauvegarde versionnee d'un fichier
+         5. Sauvegarde incrementale vers le FTP [superadmin uniquement]
+         6. Sauvegarde versionnee d'un fichier [superadmin uniquement]
          7. Generer une cle de chiffrement
          8. Chiffrer un fichier
          9. Dechiffrer un fichier
@@ -86,12 +86,18 @@ def menu_gestion_fichiers():
                 download_fichier()
 
             case '5':
-                print("Vous avez selectionne la sauvegarde incrementale")
-                sauvegarde_incrementale()
+                if role_connecte != 'superadmin':
+                    print("Acces refuse : seul le superadmin peut effectuer des sauvegardes")
+                else:
+                    print("Vous avez selectionne la sauvegarde incrementale")
+                    sauvegarde_incrementale()
 
             case '6':
-                print("Vous avez selectionne la sauvegarde versionnee")
-                sauvegarde_versionnee()
+                if role_connecte != 'superadmin':
+                    print("Acces refuse : seul le superadmin peut effectuer des sauvegardes")
+                else:
+                    print("Vous avez selectionne la sauvegarde versionnee")
+                    sauvegarde_versionnee()
 
             case '7':
                 print("Vous avez selectionne la generation de cle")
@@ -162,7 +168,7 @@ def affichage_menu_principal():
 
             case '2':
                 print("Vous avez selectionne la Gestion des Fichiers")
-                menu_gestion_fichiers()
+                menu_gestion_fichiers(role_connecte)
 
             case '3':
                 print("Vous avez selectionne la Gestion Reseau / SYS")
