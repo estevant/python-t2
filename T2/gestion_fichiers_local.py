@@ -1,4 +1,5 @@
 import os
+import shutil
 
 def gestion_fichiers_local():
     while True:
@@ -113,41 +114,16 @@ def modifier_fichier():
         print(f"Erreur : {e}")
 
 
-def _copier_fichier(source, destination):
-    with open(source, 'rb') as f_src:
-        contenu = f_src.read()
-    with open(destination, 'wb') as f_dst:
-        f_dst.write(contenu)
-
-def _copier_repertoire(source, destination):
-    os.makedirs(destination, exist_ok=True)
-    for element in os.listdir(source):
-        src_elem = os.path.join(source, element)
-        dst_elem = os.path.join(destination, element)
-        if os.path.isdir(src_elem):
-            _copier_repertoire(src_elem, dst_elem)  # copie récursive des sous-répertoires
-        else:
-            _copier_fichier(src_elem, dst_elem)
-
-def _supprimer_repertoire(chemin):
-    for racine, dossiers, fichiers in os.walk(chemin, topdown=False):
-        for fichier in fichiers:
-            os.remove(os.path.join(racine, fichier))
-        for dossier in dossiers:
-            os.rmdir(os.path.join(racine, dossier))
-    os.rmdir(chemin)
-
-
 def copier_fichier_repertoire():
     source = input("saisir le chemin source : ").strip()
     destination = input("saisir le chemin de destination : ").strip()
 
     try:
         if os.path.isdir(source):
-            _copier_repertoire(source, destination)  # copie récursive d'un répertoire
+            shutil.copytree(source, destination)# Copie récursive d'un répertoire
             print(f"le repertoire '{source}' a ete copie vers '{destination}'")
         elif os.path.isfile(source):
-            _copier_fichier(source, destination)  # copie d'un fichier
+            shutil.copy2(source, destination)# Copie d'un fichier en conservant les métadonnées
             print(f"le fichier '{source}' a ete copie vers '{destination}'")
         else:
             print("Erreur: le chemin source n'existe pas")
@@ -164,20 +140,10 @@ def deplacer_fichier_repertoire():
         return
 
     try:
-        os.rename(source, destination)  # déplace le fichier ou répertoire
+        shutil.move(source, destination)# déplace le fichier ou répertoire -> destination
         print(f"'{source}' a ete deplace vers '{destination}'")
-    except OSError:
-        # os.rename échoue si source et destination sont sur des partitions différentes
-        try:
-            if os.path.isdir(source):
-                _copier_repertoire(source, destination)
-                _supprimer_repertoire(source)
-            else:
-                _copier_fichier(source, destination)
-                os.remove(source)
-            print(f"'{source}' a ete deplace vers '{destination}'")
-        except Exception as e:
-            print(f"Erreur : {e}")
+    except Exception as e:
+        print(f"Erreur : {e}")
 
 
 def supprimer_fichier_repertoire():
@@ -194,10 +160,10 @@ def supprimer_fichier_repertoire():
 
     try:
         if os.path.isdir(chemin):
-            _supprimer_repertoire(chemin)  # supprime le répertoire et son contenu récursivement
+            shutil.rmtree(chemin)# Supprime le répertoire et son contenu
             print(f"le repertoire '{chemin}' et son contenu ont ete supprimes")
         else:
-            os.remove(chemin)  # supprime le fichier
+            os.remove(chemin)# Supprime
             print(f"le fichier '{chemin}' a ete supprime")
     except Exception as e:
         print(f"Erreur : {e}")
