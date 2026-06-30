@@ -1,7 +1,5 @@
 from scan_ports import menu_scan_ports
 from scan_reseau import menu_scan_reseau
-from chat_serveur import lancer_serveur_chat
-from chat_client import lancer_client_chat
 
 
 def menu_t3():
@@ -25,10 +23,8 @@ def menu_t3():
                 menu_scan_reseau()
             case '3':
                 print("Vous avez selectionne le serveur de chat")
-                lancer_serveur_chat()
             case '4':
                 print("Vous avez selectionne le client de chat")
-                lancer_client_chat()
             case '0':
                 print("Vous avez quitte le programme")
                 return
