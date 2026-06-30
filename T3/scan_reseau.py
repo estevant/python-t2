@@ -112,7 +112,7 @@ def scanner_plage_adresses():
 
 
 def scanner_reseau_complet():
-    # scan de tout le reseau/sous-reseau (et vlan associes le cas echeant)
+    # scan de tout le reseau/sous-reseau
     reseau_cidr = input("Saisir le reseau complet au format CIDR (ex: 192.168.1.0/24) : ").strip()
 
     try:
