@@ -4,7 +4,6 @@ FICHIER_LOG = "journal_activite.log"
 
 
 def ecrire_log(message, fichier=FICHIER_LOG):
-    # journal d'activite horodate, commun a tous les modules T3
     horodatage = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     ligne = f"[{horodatage}] {message}"
     try:
