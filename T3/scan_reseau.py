@@ -27,7 +27,7 @@ def resoudre_reverse_dns(adresse_ip):
 
 
 def tester_hote_actif(adresse_ip, port=80, timeout=0.5):
-    # teste si une machine repond sur un port (a defaut de ping ICMP, plus simple en socket)
+    # teste si une machine repond sur un port
     try:
         famille = socket.AF_INET6 if ":" in adresse_ip else socket.AF_INET
         sock = socket.socket(famille, socket.SOCK_STREAM)
